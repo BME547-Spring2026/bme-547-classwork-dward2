@@ -16,7 +16,7 @@ The database will contain the following:
   + Street
   * City
   * Zip Code
-
+* Patient data of birth
 
 
 
