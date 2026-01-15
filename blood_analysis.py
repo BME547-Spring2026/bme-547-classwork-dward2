@@ -7,6 +7,10 @@ def interface():
         choice = input("Enter your choice: ")
         if choice == "9":
             keep_running = False
+
+def input_HDL_value():
+    choice = input("Enter the HDL result: ")
+    return choice
         
         
 interface()
