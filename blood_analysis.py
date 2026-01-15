@@ -21,4 +21,8 @@ def check_HDL(hdl_input):
     elif hdl_value < 40:
         return "Low"
         
+def output_HDL_result(hdl_result):
+    print("The result of the HDL test is {}".format(hdl_result))
+    return
+    
 interface()
