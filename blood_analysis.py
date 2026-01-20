@@ -14,9 +14,13 @@ def interface():
         elif choice == "2":
             LDL_driver()
 
-def input_HDL_value():
-    choice = input("Enter the HDL result: ")
+def input_test_value(test_name):
+    choice = input("Enter the {} result: ".format(test_name))
     return choice
+
+def output_test_result(test_name, test_value, test_result):
+    print("The result of {} for the {} test is {}".format(test_value, test_name, test_result))
+    return
     
 def check_HDL(hdl_input):
     hdl_value = int(hdl_input)
@@ -27,19 +31,12 @@ def check_HDL(hdl_input):
     elif hdl_value < 40:
         return "Low"
         
-def output_HDL_result(hdl_result):
-    print("The result of the HDL test is {}".format(hdl_result))
-    return
-    
 def HDL_driver():
-    hdl_input = input_HDL_value()
-    hdl_result = check_HDL(hdl_input)
-    output_HDL_result(hdl_result)
-    
-def input_LDL_value():
-    choice = input("Enter the LDL result: ")
-    return choice
-    
+    test_name = "HDL"
+    test_input = input_test_value(test_name)
+    test_result = check_HDL(test_input)
+    output_test_result(test_input, test_name, test_result)
+        
 def check_LDL(ldl_input):
     ldl_value = int(ldl_input)
     if ldl_value < 130:
@@ -51,14 +48,10 @@ def check_LDL(ldl_input):
     elif ldl_value >= 190:
         return "Very High"
         
-def output_LDL_result(ldl_result):
-    print("The result of the LDL test is {}".format(ldl_result))
-    return
-    
 def LDL_driver():
-    ldl_input = input_LDL_value()
-    ldl_result = check_LDL(ldl_input)
-    output_LDL_result(ldl_result)
-
+    test_name = "LDL"
+    test_input = input_test_value(test_name)
+    test_result = check_LDL(test_input)
+    output_test_result(test_input, test_name, test_result)
 
 interface()
