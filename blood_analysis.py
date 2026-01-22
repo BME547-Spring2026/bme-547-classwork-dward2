@@ -54,4 +54,6 @@ def LDL_driver():
     test_result = check_LDL(test_input)
     output_test_result(test_input, test_name, test_result)
 
-interface()
+
+if __name__ == "__main__":
+    interface()
