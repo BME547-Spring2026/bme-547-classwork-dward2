@@ -7,13 +7,19 @@ def input_weight_entry():
 
 
 def parse_weight_input(weight_input):
-    weight, units = weight_input.split(' ')
-    weight = int(weight)
-    if units == "lb":
+    try:
+        weight, units = weight_input.split(' ')
+    except ValueError: 
+        return -99
+    weight = float(weight)
+    units = units.lower()
+    if units in ["lb", "lbs", "pound", "pounds"]:
         weight_kg = convert_lb_to_kg(weight)
-    else:
+    elif units in ["kg", "kgs", "kilograms", "kilograms"]:
         weight_kg = weight
     weight_kg = round(weight_kg)
+    if weight_kg > 1000:
+        return -99
     return weight_kg
 
 
