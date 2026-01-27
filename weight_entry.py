@@ -9,7 +9,7 @@ def input_weight_entry():
 def parse_weight_input(weight_input):
     try:
         weight, units = weight_input.split(' ')
-    except ValueError: 
+    except ValueError:
         return -99
     weight = float(weight)
     units = units.lower()
