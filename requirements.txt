@@ -2,3 +2,4 @@ jupyter
 numpy
 pytest
 pytest-pycodestyle
+pytest-cov
