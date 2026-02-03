@@ -10,6 +10,8 @@
 
 """
 
+db = []
+
 
 def load_patient_file(filename):
     # Example using open/close
@@ -39,7 +41,7 @@ def create_patient(line):
 
 
 def process_all_patients(patient_raw_data):
-    db = []
+
     for item in patient_raw_data:
         patient = create_patient(item)
         print(patient)
@@ -47,14 +49,14 @@ def process_all_patients(patient_raw_data):
     return db
     
     
-def find_patient(db, mrn):
+def find_patient(mrn):
     for patient in db:
         if patient["mrn"] == mrn:
             return patient
     return None
     
     
-def add_test_data(db):
+def add_test_data():
     # REad in the blood_test_data file
     test_data_raw = load_patient_file("blood_test_data.txt")
     # For each line in the file,
@@ -63,10 +65,9 @@ def add_test_data(db):
         mrn, test_name, test_value = line.split(",")
         mrn = int(mrn)
         # Find the correct patient in the db
-        patient = find_patient(db, mrn)
+        patient = find_patient(mrn)
         # Add the test to that patient record
         patient["tests"].append((test_name, float(test_value)))
-    return db
     
 
 def is_minor(patient):
@@ -83,16 +84,16 @@ def output_patient(patient):
     print("  Age: {}".format(patient["age"]))
 
 
-def print_database(db):
+def print_database():
     for patient in db:
         output_patient(patient)
 
 def main():
     patient_raw_data = load_patient_file("patient_data.txt")
-    db = process_all_patients(patient_raw_data)
-    print_database(db)
-    db = add_test_data(db)
-    print_database(db)
+    process_all_patients(patient_raw_data)
+    print_database()
+    db = add_test_data()
+    print_database()
     
 
 if __name__ == "__main__":
