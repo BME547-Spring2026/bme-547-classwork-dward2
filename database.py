@@ -37,14 +37,19 @@ def create_patient(line):
 
 
 def process_all_patients(patient_raw_data):
+    db = []
     for item in patient_raw_data:
         patient = create_patient(item)
         print(patient)
+        db.append(patient)
+    return db
 
 
 def main():
     patient_raw_data = load_patient_file()
-    process_all_patients(patient_raw_data)
+    db = process_all_patients(patient_raw_data)
+    print(db)
+    
 
 if __name__ == "__main__":
     main()
