@@ -46,7 +46,6 @@ def process_all_patients(patient_raw_data):
         patient = create_patient(item)
         print(patient)
         db.append(patient)
-    return db
     
     
 def find_patient(mrn):
@@ -92,7 +91,7 @@ def main():
     patient_raw_data = load_patient_file("patient_data.txt")
     process_all_patients(patient_raw_data)
     print_database()
-    db = add_test_data()
+    add_test_data()
     print_database()
     
 
