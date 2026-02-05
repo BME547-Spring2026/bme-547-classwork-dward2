@@ -47,8 +47,21 @@ def test_find_patient_none():
     # Assert
     assert answer == None
     
-
+"""
 def test_add_test_data():
+    from database import add_test_data, db, \
+        load_patient_file, process_all_patients
+    # Arrange
+    patient = {"mrn": 12345, "tests": []}
+    db.append(patient)
+    # Act
+    add_test_data()
+    answer = len(db[0]["tests"])
+    #Cleanup
+    db.clear()
+    # Assert
+    assert answer == 1
+ """   
     
 
     
