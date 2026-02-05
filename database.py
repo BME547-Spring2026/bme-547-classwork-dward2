@@ -13,6 +13,30 @@
 db = []
 
 
+class Patient:
+    
+    def __init__(self, first_name, last_name, mrn,
+                 age):
+        self.first_name = first_name
+        self.last_name = last_name
+        self.mrn = mrn
+        self.age = age
+        self.tests = []
+        
+    def __repr__(self):
+        return "Patient, mrn={}".format(self.mrn)
+        
+    def output_patient(self):
+        print("Name: {} {}".format(self.first_name, 
+                                   self.last_name))
+        print("  MRN: {}".format(self.mrn))
+        print("  Age: {}".format(self.age))
+        print("  Tests:  {}".format(self.tests))
+
+
+
+        
+
 def load_patient_file(filename):
     # Example using open/close
     in_file = open(filename, "r")
@@ -34,9 +58,9 @@ def create_patient(line):
     line = line.strip("\n")
     data = line.split(",")
     first_name, last_name = data[0].split(" ")
-    patient = {"first_name": first_name, "last_name": last_name,
-               "mrn": int(data[1]), "age": int(data[2]),
-               "tests": []}
+    patient = Patient(first_name, last_name, 
+                      int(data[1]), 
+                      int(data[2]))
     return patient
 
 
@@ -50,7 +74,7 @@ def process_all_patients(patient_raw_data):
     
 def find_patient(mrn):
     for patient in db:
-        if patient["mrn"] == mrn:
+        if patient.mrn == mrn:
             return patient
     return None
     
@@ -66,7 +90,7 @@ def add_test_data():
         # Find the correct patient in the db
         patient = find_patient(mrn)
         # Add the test to that patient record
-        patient["tests"].append((test_name, float(test_value)))
+        patient.tests.append((test_name, float(test_value)))
     
 
 def is_minor(patient):
@@ -76,16 +100,11 @@ def is_minor(patient):
         return False
         
 
-def output_patient(patient):
-    print("Name: {} {}".format(patient["first_name"], 
-                               patient["last_name"]))
-    print("  MRN: {}".format(patient["mrn"]))
-    print("  Age: {}".format(patient["age"]))
 
 
 def print_database():
     for patient in db:
-        output_patient(patient)
+        patient.output_patient()
 
 def main():
     patient_raw_data = load_patient_file("patient_data.txt")
