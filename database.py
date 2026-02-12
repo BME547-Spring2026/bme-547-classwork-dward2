@@ -25,6 +25,21 @@ class Patient:
         
     def __repr__(self):
         return "Patient, mrn={}".format(self.mrn)
+    
+    def __eq__(self, other):
+        if type(self) != type(other):
+            return False
+        if self.first_name != other.first_name:
+            return False
+        if self.last_name != other.last_name:
+            return False
+        if self.mrn != other.mrn:
+            return False
+        if self.age != other.age:
+            return False
+        if self.tests != other.tests:
+            return False
+        return True
         
     def output_patient(self):
         print("Name: {} {}".format(self.first_name, 
@@ -33,7 +48,14 @@ class Patient:
         print("  Age: {}".format(self.age))
         print("  Tests:  {}".format(self.tests))
 
-
+    def is_minor(self):
+        if self.age < 18:
+            return True
+        else:
+            return False
+        
+    def add_test(self, test_name, test_value):
+        self.tests.append((test_name, test_value))
 
         
 
@@ -90,21 +112,13 @@ def add_test_data():
         # Find the correct patient in the db
         patient = find_patient(mrn)
         # Add the test to that patient record
-        patient.tests.append((test_name, float(test_value)))
-    
-
-def is_minor(patient):
-    if patient["age"] < 18:
-        return True
-    else:
-        return False
-        
-
+        patient.add_test(test_name, float(test_value))
 
 
 def print_database():
     for patient in db:
         patient.output_patient()
+
 
 def main():
     patient_raw_data = load_patient_file("patient_data.txt")

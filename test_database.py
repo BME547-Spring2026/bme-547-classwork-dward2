@@ -1,15 +1,38 @@
 import pytest
 
 
+def test_Patient_init():
+    from database import Patient
+    mrn = 123
+    answer = Patient("fn", "ln", mrn, 33)
+    assert answer.mrn == mrn
+
+
+def test_Patient_is_minor():
+    from database import Patient
+    patient = Patient("fn", "ln", 123, 5)
+    answer = patient.is_minor()
+    assert answer == True
+
+
+def test_Patient_add_test():
+    from database import Patient
+    patient = Patient("fn", "ln", 123, 5)
+    patient.add_test("HDL", 50)
+    assert patient.tests == [("HDL", 50)]
+
+
 def test_create_patient():
-    from database import create_patient
+    from database import create_patient, Patient
     input_data = "David Ward, 12345, 57\n"
-    expected = {"first_name": "David",
-                "last_name": "Ward",
-                "mrn": 12345,
-                "age": 57,
-                "tests": []}
+    expected = Patient("David",
+                "Ward",
+                12345,
+                57,
+    )
     answer = create_patient(input_data)
+    assert isinstance(answer, Patient)
+    assert answer.first_name == "David"
     assert answer == expected
     
     
