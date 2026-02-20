@@ -12,7 +12,7 @@ def test_Patient_is_minor():
     from database import Patient
     patient = Patient("fn", "ln", 123, 5)
     answer = patient.is_minor()
-    assert answer == True
+    assert answer is True
 
 
 def test_Patient_add_test():
@@ -26,16 +26,16 @@ def test_create_patient():
     from database import create_patient, Patient
     input_data = "David Ward, 12345, 57\n"
     expected = Patient("David",
-                "Ward",
-                12345,
-                57,
-    )
+                       "Ward",
+                       12345,
+                       57,
+                       )
     answer = create_patient(input_data)
     assert isinstance(answer, Patient)
     assert answer.first_name == "David"
     assert answer == expected
-    
-    
+
+
 def test_find_patient():
     from database import find_patient, create_patient, db
     # Arrange
@@ -47,8 +47,8 @@ def test_find_patient():
     assert answer == patient
     # Clean up
     db.clear()
-    
-    
+
+
 def test_process_all_patients():
     from database import process_all_patients, db
     # Arrange
@@ -61,15 +61,16 @@ def test_process_all_patients():
     db.clear()
     # Assert
     assert answer == 2
-    
-    
+
+
 def test_find_patient_none():
     from database import find_patient
     # Act
     answer = find_patient(12345)
     # Assert
-    assert answer == None
-    
+    assert answer is None
+
+
 """
 def test_add_test_data():
     from database import add_test_data, db, \
@@ -84,7 +85,4 @@ def test_add_test_data():
     db.clear()
     # Assert
     assert answer == 1
- """   
-    
-
-    
+ """
