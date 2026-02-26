@@ -4,3 +4,4 @@ pytest
 pytest-pycodestyle
 pytest-cov
 requests
+flask
