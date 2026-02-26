@@ -87,6 +87,15 @@ def create_patient(line):
     return patient
 
 
+def add_single_patient(in_data):
+    out_line = "{} {},{},{}".format(in_data["first_name"],
+                                    in_data["last_name"],
+                                    in_data["mrn"],
+                                    in_data["age"])
+    patient = create_patient(out_line)
+    db.append(patient)
+
+
 def process_all_patients(patient_raw_data):
 
     for item in patient_raw_data:
@@ -110,6 +119,9 @@ def add_test_data():
         line = item.strip("\n")
         mrn, test_name, test_value = line.split(",")
         mrn = int(mrn)
+        add_test_data_to_db(mrn, test_name, test_value)
+        
+def add_test_data_to_db(mrn, test_name, test_value):        
         # Find the correct patient in the db
         patient = find_patient(mrn)
         # Add the test to that patient record
