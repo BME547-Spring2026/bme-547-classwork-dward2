@@ -49,6 +49,14 @@ class Patient:
         print("  Age: {}".format(self.age))
         print("  Tests:  {}".format(self.tests))
 
+    def output_string(self):
+        out_string = "Name: {} {}\n".format(self.first_name,
+                                            self.last_name)
+        out_string += "  MRN: {}\n".format(self.mrn)
+        out_string += "  Age: {}\n".format(self.age)
+        out_string += "  Tests:  {}\n".format(self.tests)
+        return out_string
+
     def is_minor(self):
         if self.age < 18:
             return True
@@ -120,6 +128,7 @@ def add_test_data():
         mrn, test_name, test_value = line.split(",")
         mrn = int(mrn)
         add_test_data_to_db(mrn, test_name, test_value)
+
         
 def add_test_data_to_db(mrn, test_name, test_value):        
         # Find the correct patient in the db
@@ -131,6 +140,11 @@ def add_test_data_to_db(mrn, test_name, test_value):
 def print_database():
     for patient in db:
         patient.output_patient()
+
+
+def get_patient_output(mrn):
+    patient = find_patient(mrn)
+    return patient.output_string()
 
 
 def main():

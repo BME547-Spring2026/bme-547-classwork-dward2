@@ -171,6 +171,27 @@ def post_add_test_data():
     return "Successful addition", 200
 
 
+@app.route("/get_patient_info/<mrn>", methods=["GET"])
+def get_get_patient_info(mrn):
+    """ Implement GET route for getting patient information
+
+    This function implements the /get_patient_info/<mrn> route of the server.
+    This route uses a variable URL in which to receive the medical record number
+    of the patient.  The function takes that mrn from the variable URL and
+    uses its integer value as the parameter to the database.get_patient_output
+    function.  The result of this function call is returned to the requestor.
+
+    Args:
+        mrn (str): portion of the variable URL containing the patient medical
+                    record number
+
+    Returns:
+        str:  patient information
+        int:  status code
+
+    """
+    answer = database.get_patient_output(int(mrn))
+    return answer, 200
 
 
 if __name__ == "__main__":

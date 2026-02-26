@@ -38,3 +38,7 @@ r = requests.post(server + "/add_test_data",
                   json=test_json)
 print(r.status_code)
 print(r.text)
+
+r = requests.get(server + "/get_patient_info/23423")
+print(r.status_code)
+print(r.text)
