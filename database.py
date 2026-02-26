@@ -129,12 +129,12 @@ def add_test_data():
         mrn = int(mrn)
         add_test_data_to_db(mrn, test_name, test_value)
 
-        
-def add_test_data_to_db(mrn, test_name, test_value):        
-        # Find the correct patient in the db
-        patient = find_patient(mrn)
-        # Add the test to that patient record
-        patient.add_test(test_name, float(test_value))
+
+def add_test_data_to_db(mrn, test_name, test_value):
+    # Find the correct patient in the db
+    patient = find_patient(mrn)
+    # Add the test to that patient record
+    patient.add_test(test_name, float(test_value))
 
 
 def print_database():
