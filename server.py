@@ -122,6 +122,8 @@ def validate_post_input(in_data, expected_keys, expected_types):
                         error message if not
         int:  status code of 200 if validation successful, 400 if not
     """
+    if type(in_data) is not dict:
+        return "Input to route must be a dictionary", 400
     for key, expected_type in zip(expected_keys, expected_types):
         if key not in in_data:
             return "Key {} not found in input".format(key), 400
@@ -193,7 +195,14 @@ def get_get_patient_info(mrn):
         int:  status code
 
     """
+    try:
+        mrn = int(mrn)
+    except ValueError:
+        return "/get_patient_info/<mrn> expects an integer" \
+               "for the mrn value", 400
     answer = database.get_patient_output(int(mrn))
+    if answer is None:
+        return "MRN {} not found".format(mrn), 400
     return answer, 200
 
 
