@@ -144,7 +144,10 @@ def print_database():
 
 def get_patient_output(mrn):
     patient = find_patient(mrn)
-    return patient.output_string()
+    if patient is None:
+        return None
+    else:
+        return patient.output_string()
 
 
 def main():
