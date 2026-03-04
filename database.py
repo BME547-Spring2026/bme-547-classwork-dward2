@@ -54,7 +54,7 @@ class Patient:
                                             self.last_name)
         out_string += "  MRN: {}\n".format(self.mrn)
         out_string += "  Age: {}\n".format(self.age)
-        out_string += "  Tests:  {}\n".format(self.tests)
+        out_string += "  Tests: {}\n".format(self.tests)
         return out_string
 
     def is_minor(self):

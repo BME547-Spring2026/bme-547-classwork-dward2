@@ -199,7 +199,7 @@ def get_get_patient_info(mrn):
         mrn = int(mrn)
     except ValueError:
         return "/get_patient_info/<mrn> expects an integer" \
-        "for the mrn value", 400
+               "for the mrn value", 400
     answer = database.get_patient_output(int(mrn))
     if answer is None:
         return "MRN {} not found".format(mrn), 400
