@@ -11,14 +11,17 @@ collection = database["reviews"]
 
 def create_entry():
     entry = {"Reviewer": "David Ward",
-             "Name": "A Few Good Men", "Type": "Movie", "Genre": "drama"}
+             "Name": "A Few Good Men",
+             "Type": "Movie", "Genre": "drama"}
     x = collection.insert_one(entry)
     print(x)
     entry = {"Watcher": "David Ward",
-             "Name": "The American President", "Type": "Movie", "Genre": "RomCom"}
+             "Name": "The American President",
+             "Type": "Movie", "Genre": "RomCom"}
     x = collection.insert_one(entry)
     entry = {"Reviewer": "David Ward",
-             "Name": "Sleepless in Seattle", "Type": "Movie", "Genre": "Rom-Com"}
+             "Name": "Sleepless in Seattle",
+             "Type": "Movie", "Genre": "Rom-Com"}
     x = collection.insert_one(entry)
 
 

@@ -23,12 +23,13 @@ class Patient:
 
     @classmethod
     def make_connection(cls):
-        uri = "mongodb+srv://db_sp26:db_sp26@bme547.ba348.mongodb.net/?appName=BME547"
+        uri = "mongodb+srv://db_sp26:db_sp26@bme547.ba348." \
+              "mongodb.net/?appName=BME547"
 
         cls.client = MongoClient(uri)
         cls.client.admin.command({'ping': 1})
         cls.database = cls.client["patient_db"]
-        cls.collection = cls.database["patient"]  
+        cls.collecton = cls.database["patient"]
 
     def __init__(self, first_name, last_name, mrn,
                  age):
@@ -46,7 +47,7 @@ class Patient:
         else:
             r = self.collection.replace_one({"_id": self.mrn}, out_dict)
         return r
-    
+
     @classmethod
     def retrieve_by_mrn(cls, mrn):
         new_dict = cls.collection.find_one({"_id": mrn})
@@ -56,7 +57,7 @@ class Patient:
                               new_dict["age"])
         new_patient.tests = new_dict["tests"]
         return new_patient
-    
+
     def delete(self):
         self.collection.delete_one({"_id": self.mrn})
 
@@ -213,7 +214,6 @@ def crud_tests():
     new_patient.save()
     new_patient.output_patient()
     new_patient.delete()
-
 
 
 if __name__ == "__main__":
