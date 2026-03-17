@@ -10,11 +10,26 @@
   and calls create_patient for each patient and prints patient dictionary
 
 """
+from pymongo import MongoClient
 
 db = []
 
 
 class Patient:
+
+    client = None
+    database = None
+    collection = None
+
+    @classmethod
+    def make_connection(cls):
+        uri = "mongodb+srv://db_sp26:db_sp26@bme547.ba348." \
+              "mongodb.net/?appName=BME547"
+
+        cls.client = MongoClient(uri)
+        cls.client.admin.command({'ping': 1})
+        cls.database = cls.client["patient_db"]
+        cls.collecton = cls.database["patient"]
 
     def __init__(self, first_name, last_name, mrn,
                  age):
@@ -23,6 +38,28 @@ class Patient:
         self.mrn = mrn
         self.age = age
         self.tests = []
+
+    def save(self):
+        existing = self.collection.find_one({"_id": self.mrn})
+        out_dict = self.output_dictionary()
+        if existing is None:
+            r = self.collection.insert_one(out_dict)
+        else:
+            r = self.collection.replace_one({"_id": self.mrn}, out_dict)
+        return r
+
+    @classmethod
+    def retrieve_by_mrn(cls, mrn):
+        new_dict = cls.collection.find_one({"_id": mrn})
+        new_patient = Patient(new_dict["first_name"],
+                              new_dict["last_name"],
+                              new_dict["_id"],
+                              new_dict["age"])
+        new_patient.tests = new_dict["tests"]
+        return new_patient
+
+    def delete(self):
+        self.collection.delete_one({"_id": self.mrn})
 
     def __repr__(self):
         return "Patient, mrn={}".format(self.mrn)
@@ -65,6 +102,14 @@ class Patient:
 
     def add_test(self, test_name, test_value):
         self.tests.append((test_name, test_value))
+
+    def output_dictionary(self):
+        out_dict = {"first_name": self.first_name,
+                    "last_name": self.last_name,
+                    "_id": self.mrn,
+                    "age": self.age,
+                    "tests": self.tests}
+        return out_dict
 
 
 def load_patient_file(filename):
@@ -158,5 +203,18 @@ def main():
     print_database()
 
 
+def crud_tests():
+    Patient.make_connection()
+    # patient_1 = Patient("Ann", "Ables", 123, 30)
+    # print(patient_1.save())
+
+    new_patient = Patient.retrieve_by_mrn(123)
+    new_patient.output_patient()
+    new_patient.tests.append(("HDL", 50))
+    new_patient.save()
+    new_patient.output_patient()
+    new_patient.delete()
+
+
 if __name__ == "__main__":
-    main()
+    crud_tests()
