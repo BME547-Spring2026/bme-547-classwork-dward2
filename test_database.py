@@ -1,4 +1,12 @@
 import pytest
+from pymongo import MongoClient
+uri = "mongodb+srv://db_sp26:db_sp26@bme547.ba348." \
+              "mongodb.net/?appName=BME547"
+
+client = MongoClient(uri)
+client.admin.command({'ping': 1})
+database = client["patient_db"]
+collection = database["patient"]
 
 
 def test_Patient_init():
@@ -20,6 +28,16 @@ def test_Patient_add_test():
     patient = Patient("fn", "ln", 123, 5)
     patient.add_test("HDL", 50)
     assert patient.tests == [("HDL", 50)]
+
+
+def test_Patient_save():
+    from database import Patient
+    Patient.make_connection()
+    patient = Patient("fn", "ln", 123, 50)
+    patient.save()
+    answer = collection.find_one({"_id": 123})
+    answer = Patient.retrieve_by_mrn(123)
+    assert answer["first_name"] == "fn"
 
 
 def test_create_patient():

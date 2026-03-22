@@ -29,7 +29,7 @@ class Patient:
         cls.client = MongoClient(uri)
         cls.client.admin.command({'ping': 1})
         cls.database = cls.client["patient_db"]
-        cls.collecton = cls.database["patient"]
+        cls.collection = cls.database["patient"]
 
     def __init__(self, first_name, last_name, mrn,
                  age):
@@ -57,6 +57,18 @@ class Patient:
                               new_dict["age"])
         new_patient.tests = new_dict["tests"]
         return new_patient
+    
+    @classmethod
+    def retrieve_all(cls):
+        all_patients = []
+        for item in cls.collection.find({}):
+            new_patient = Patient(item["first_name"],
+                                  item["last_name"],
+                                  item["_id"],
+                                  item["age"])
+            new_patient.tests = item["tests"]
+            all_patients.append(new_patient)
+        return all_patients
 
     def delete(self):
         self.collection.delete_one({"_id": self.mrn})
@@ -154,14 +166,12 @@ def process_all_patients(patient_raw_data):
     for item in patient_raw_data:
         patient = create_patient(item)
         print(patient)
-        db.append(patient)
+        patient.save()
 
 
 def find_patient(mrn):
-    for patient in db:
-        if patient.mrn == mrn:
-            return patient
-    return None
+    patient = Patient.retrieve_by_mrn(mrn)
+    return patient
 
 
 def add_test_data():
@@ -180,10 +190,12 @@ def add_test_data_to_db(mrn, test_name, test_value):
     patient = find_patient(mrn)
     # Add the test to that patient record
     patient.add_test(test_name, float(test_value))
+    patient.save()
 
 
 def print_database():
-    for patient in db:
+    all_patients = Patient.retrieve_all()
+    for patient in all_patients:
         patient.output_patient()
 
 
@@ -196,6 +208,7 @@ def get_patient_output(mrn):
 
 
 def main():
+    Patient.make_connection()
     patient_raw_data = load_patient_file("patient_data.txt")
     process_all_patients(patient_raw_data)
     print_database()
@@ -217,4 +230,4 @@ def crud_tests():
 
 
 if __name__ == "__main__":
-    crud_tests()
+    main()
