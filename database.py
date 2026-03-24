@@ -151,6 +151,10 @@ def create_patient(line):
                       int(data[2]))
     return patient
 
+def create_patient_from_gui(patient_name, patient_id):
+    print("Do something")
+    return "Success"
+
 
 def add_single_patient(in_data):
     out_line = "{} {},{},{}".format(in_data["first_name"],
