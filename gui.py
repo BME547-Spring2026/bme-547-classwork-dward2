@@ -35,7 +35,7 @@ def main_window():
         rh_value.set("+")
         dc_value.set("")
 
-    def check_entry_box():
+    def check_entry_box(x):
         if name_value.get() != "":
             button_ok.config(state=tk.NORMAL)
         else:
@@ -55,6 +55,7 @@ def main_window():
     # name_value.set("Enter your name here")
     entry_name = tk.Entry(root, font=base_font, textvariable=name_value)
     entry_name.grid(column=1, row=1)
+    entry_name.bind("<KeyPress>", check_entry_box)
     
     id_value = tk.StringVar()
     label_id = tk.Label(root, text="Id:", font=base_font)
@@ -89,7 +90,7 @@ def main_window():
 
     button_ok = tk.Button(root, text="Ok", font=base_font,
                           command=ok_btn_cmd,
-                        #   state=tk.DISABLED
+                           state=tk.DISABLED
                           )
     button_ok.grid(column=1, row=6, sticky=tk.NSEW)
     button_cancel = tk.Button(root, text="Cancel", font=base_font,
