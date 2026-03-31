@@ -8,3 +8,5 @@ flask
 pymongo
 dnspython
 pillow
+matplotlib
+scikit-image
