@@ -1,9 +1,22 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, filedialog, messagebox, simpledialog
 import database
-
+from PIL import Image, ImageT
 
 base_font = ("arial", 24)
+
+def load_tk_image(filename):
+    pillow_image = Image.open(filename)
+    width, height = pillow_image.size
+    if width > height:
+        alpha = 100/width
+    else:
+        alpha = 100/height
+    new_width = round(width*alpha)
+    new_height = round(height*alpha)
+    pillow_image = pillow_image.resize((new_width, new_height))
+    tk_image = ImageTk.PhotoImage(pillow_image)
+    return tk_image
 
 
 def main_window():
@@ -13,6 +26,10 @@ def main_window():
 
     def ok_btn_cmd():
         # Get data from GUI
+        choice = messagebox.askyesno("Save Patient", "Do you want to save this patient")
+        print(choice)
+        if choice is False:
+            return
         patient_name = name_value.get()
         patient_id = id_value.get()
         patient_blood_letter = blood_letter_value.get()
@@ -27,6 +44,7 @@ def main_window():
         print("{}{}".format(patient_blood_letter, patient_rh))
         print(patient_dc)
         clear_gui()
+        root.after(2000, change_title_color)
 
     def clear_gui():
         name_value.set("")
@@ -41,12 +59,32 @@ def main_window():
         else:
             button_ok.config(state=tk.DISABLED)
 
+    def change_title_color():
+        title_color = title_label.cget("foreground")
+        if title_color == "red":
+            new_color = "black"
+        else:
+            new_color = "red"
+        title_label.configure(foreground=new_color)
+        root.after(2000, change_title_color)
+
+    def load_img_cmd():
+        filename = filedialog.askopenfilename()
+        if filename == "":
+            return
+        new_image = load_tk_image(filename)
+        label_image.configure(image=new_image)
+        label_image.image = new_image
+
     root = tk.Tk()
     # root.geometry("800x600")
     root.title("Blood Donor Database")
 
-    title_label = tk.Label(root, text="Blood Donor Database",
-                           font=base_font)
+    title_label = tk.Label(
+                           root, text="Blood Donor Database",
+                           font=base_font,
+                           foreground="red",
+                           )
     title_label.grid(column=0, row=0, columnspan=2, sticky=tk.W)
     name_label = tk.Label(root, text="Name:", font=base_font)
     name_label.grid(column=0, row=1, sticky=tk.E, padx=5)
@@ -109,7 +147,18 @@ def main_window():
     label_status = tk.Label(root, text="")
     label_status.grid(column=2, row=4)
 
+    image_title = tk.Label(root, text="Patient Image", font=base_font)
+    image_title.grid(column=4, row=0)
+    tk_image = load_tk_image("blank.png")
+    label_image = tk.Label(root, image=tk_image)
+    label_image.image = tk_image
+    label_image.grid(column=4, row=1, rowspan=3)
 
+    button_image = tk.Button(root, text="Load image", command=load_img_cmd,
+                             font=base_font)
+    button_image.grid(column=4, row=6)
+
+    # root.after(2000, change_title_color)
     root.mainloop()
     print("Finished")
 
