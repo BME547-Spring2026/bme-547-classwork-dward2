@@ -22,6 +22,13 @@ def load_tk_image(filename):
 def main_window():
 
     def cancel_btn_cmd():
+        """ Closes window when cancel button is clicked
+
+        This subfunction is linked to the cancel button.  When the button is clicked,
+        this function uses the destroy method of the root window that causes it to close
+        and terminates the mainloop.
+        
+        """
         root.destroy()
 
     def ok_btn_cmd():
