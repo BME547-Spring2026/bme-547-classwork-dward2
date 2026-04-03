@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<head>
+    <title>BME Class Demonstration</title>
+</head>
+
+<body>
+    <h1>BME 547 HTML Example</h1>
+
+    <form method="post">
+        <label for="first_name_id">First Name:</label>
+        <input type="text" name="first_name", id="first_name_id">
+        <br><br>
+        <label for="A_id">A:</label>
+        <input type="radio" id="A_id", name="letter_choice", value="A">
+        <br>
+        <label for="B_id">B:</label>
+        <input type="radio" id="B_id", name="letter_choice", value="B">
+        <br>
+        <input type="submit" Value="Upload">
+    </form>
+    <p>Status:  {{ status_string }}</p>
+
+    <!---
+    <p style="color:red; font-size: 160%;
+    text-align: right;">This is a webpage for demonstration in class.<br>
+        This is a second line.
+    </p>
+    <p style="color:blue">Second paragraph.</p>
+
+    <img src="static/images.jpg" alt="Blue Devil", width="100">
+    --->
+
+</body>
