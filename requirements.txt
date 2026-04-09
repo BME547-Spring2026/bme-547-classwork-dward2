@@ -10,3 +10,4 @@ dnspython
 pillow
 matplotlib
 scikit-image
+pycryptodome
